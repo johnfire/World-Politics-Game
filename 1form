@@ -1,0 +1,160 @@
+/********************************************************************************
+** Form generated from reading UI file 'designerZW4434.ui'
+**
+** Created by: Qt User Interface Compiler version 4.8.6
+**
+** WARNING! All changes made in this file will be lost when recompiling UI file!
+********************************************************************************/
+
+#ifndef DESIGNERZW4434_H
+#define DESIGNERZW4434_H
+
+#include <QtCore/QVariant>
+#include <QtGui/QAction>
+#include <QtGui/QApplication>
+#include <QtGui/QButtonGroup>
+#include <QtGui/QHeaderView>
+#include <QtGui/QListWidget>
+#include <QtGui/QMainWindow>
+#include <QtGui/QMenu>
+#include <QtGui/QMenuBar>
+#include <QtGui/QPushButton>
+#include <QtGui/QRadioButton>
+#include <QtGui/QStatusBar>
+#include <QtGui/QTextEdit>
+#include <QtGui/QWidget>
+
+QT_BEGIN_NAMESPACE
+
+class Ui_MainWindow
+{
+public:
+    QAction *actionNew_game;
+    QAction *actionOpen_old_game;
+    QAction *actionSave_game;
+    QAction *actionQuit;
+    QAction *actionPeople;
+    QAction *actionPlaces;
+    QAction *actionActions;
+    QAction *actionView_data;
+    QWidget *centralwidget;
+    QPushButton *pushButton;
+    QListWidget *listWidget;
+    QRadioButton *radioButton;
+    QRadioButton *radioButton_2;
+    QRadioButton *radioButton_3;
+    QRadioButton *radioButton_4;
+    QTextEdit *textEdit;
+    QMenuBar *menubar;
+    QMenu *menuFile;
+    QMenu *menuCreate;
+    QMenu *menuView_file;
+    QStatusBar *statusbar;
+
+    void setupUi(QMainWindow *MainWindow)
+    {
+        if (MainWindow->objectName().isEmpty())
+            MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
+        MainWindow->resize(800, 600);
+        actionNew_game = new QAction(MainWindow);
+        actionNew_game->setObjectName(QString::fromUtf8("actionNew_game"));
+        actionOpen_old_game = new QAction(MainWindow);
+        actionOpen_old_game->setObjectName(QString::fromUtf8("actionOpen_old_game"));
+        actionSave_game = new QAction(MainWindow);
+        actionSave_game->setObjectName(QString::fromUtf8("actionSave_game"));
+        actionQuit = new QAction(MainWindow);
+        actionQuit->setObjectName(QString::fromUtf8("actionQuit"));
+        actionPeople = new QAction(MainWindow);
+        actionPeople->setObjectName(QString::fromUtf8("actionPeople"));
+        actionPlaces = new QAction(MainWindow);
+        actionPlaces->setObjectName(QString::fromUtf8("actionPlaces"));
+        actionActions = new QAction(MainWindow);
+        actionActions->setObjectName(QString::fromUtf8("actionActions"));
+        actionView_data = new QAction(MainWindow);
+        actionView_data->setObjectName(QString::fromUtf8("actionView_data"));
+        centralwidget = new QWidget(MainWindow);
+        centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        pushButton = new QPushButton(centralwidget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(20, 190, 105, 33));
+        listWidget = new QListWidget(centralwidget);
+        listWidget->setObjectName(QString::fromUtf8("listWidget"));
+        listWidget->setGeometry(QRect(440, 10, 256, 511));
+        radioButton = new QRadioButton(centralwidget);
+        radioButton->setObjectName(QString::fromUtf8("radioButton"));
+        radioButton->setGeometry(QRect(10, 120, 124, 28));
+        radioButton_2 = new QRadioButton(centralwidget);
+        radioButton_2->setObjectName(QString::fromUtf8("radioButton_2"));
+        radioButton_2->setGeometry(QRect(10, 60, 124, 28));
+        radioButton_3 = new QRadioButton(centralwidget);
+        radioButton_3->setObjectName(QString::fromUtf8("radioButton_3"));
+        radioButton_3->setGeometry(QRect(10, 90, 124, 28));
+        radioButton_4 = new QRadioButton(centralwidget);
+        radioButton_4->setObjectName(QString::fromUtf8("radioButton_4"));
+        radioButton_4->setGeometry(QRect(10, 150, 124, 28));
+        textEdit = new QTextEdit(centralwidget);
+        textEdit->setObjectName(QString::fromUtf8("textEdit"));
+        textEdit->setGeometry(QRect(10, 20, 181, 31));
+        MainWindow->setCentralWidget(centralwidget);
+        menubar = new QMenuBar(MainWindow);
+        menubar->setObjectName(QString::fromUtf8("menubar"));
+        menubar->setGeometry(QRect(0, 0, 800, 33));
+        menuFile = new QMenu(menubar);
+        menuFile->setObjectName(QString::fromUtf8("menuFile"));
+        menuCreate = new QMenu(menubar);
+        menuCreate->setObjectName(QString::fromUtf8("menuCreate"));
+        menuView_file = new QMenu(menubar);
+        menuView_file->setObjectName(QString::fromUtf8("menuView_file"));
+        MainWindow->setMenuBar(menubar);
+        statusbar = new QStatusBar(MainWindow);
+        statusbar->setObjectName(QString::fromUtf8("statusbar"));
+        MainWindow->setStatusBar(statusbar);
+
+        menubar->addAction(menuFile->menuAction());
+        menubar->addAction(menuCreate->menuAction());
+        menubar->addAction(menuView_file->menuAction());
+        menuFile->addAction(actionNew_game);
+        menuFile->addAction(actionOpen_old_game);
+        menuFile->addAction(actionSave_game);
+        menuFile->addSeparator();
+        menuFile->addAction(actionQuit);
+        menuCreate->addAction(actionPeople);
+        menuCreate->addAction(actionPlaces);
+        menuCreate->addAction(actionActions);
+        menuView_file->addAction(actionView_data);
+
+        retranslateUi(MainWindow);
+
+        QMetaObject::connectSlotsByName(MainWindow);
+    } // setupUi
+
+    void retranslateUi(QMainWindow *MainWindow)
+    {
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
+        actionNew_game->setText(QApplication::translate("MainWindow", "new game", 0, QApplication::UnicodeUTF8));
+        actionOpen_old_game->setText(QApplication::translate("MainWindow", "open old game", 0, QApplication::UnicodeUTF8));
+        actionSave_game->setText(QApplication::translate("MainWindow", "save game", 0, QApplication::UnicodeUTF8));
+        actionQuit->setText(QApplication::translate("MainWindow", "quit", 0, QApplication::UnicodeUTF8));
+        actionPeople->setText(QApplication::translate("MainWindow", "people", 0, QApplication::UnicodeUTF8));
+        actionPlaces->setText(QApplication::translate("MainWindow", "places", 0, QApplication::UnicodeUTF8));
+        actionActions->setText(QApplication::translate("MainWindow", "actions", 0, QApplication::UnicodeUTF8));
+        actionView_data->setText(QApplication::translate("MainWindow", "view data", 0, QApplication::UnicodeUTF8));
+        pushButton->setText(QApplication::translate("MainWindow", "PushButton", 0, QApplication::UnicodeUTF8));
+        radioButton->setText(QApplication::translate("MainWindow", "RadioButton", 0, QApplication::UnicodeUTF8));
+        radioButton_2->setText(QApplication::translate("MainWindow", "RadioButton", 0, QApplication::UnicodeUTF8));
+        radioButton_3->setText(QApplication::translate("MainWindow", "RadioButton", 0, QApplication::UnicodeUTF8));
+        radioButton_4->setText(QApplication::translate("MainWindow", "RadioButton", 0, QApplication::UnicodeUTF8));
+        menuFile->setTitle(QApplication::translate("MainWindow", "File", 0, QApplication::UnicodeUTF8));
+        menuCreate->setTitle(QApplication::translate("MainWindow", "create", 0, QApplication::UnicodeUTF8));
+        menuView_file->setTitle(QApplication::translate("MainWindow", "view file", 0, QApplication::UnicodeUTF8));
+    } // retranslateUi
+
+};
+
+namespace Ui {
+    class MainWindow: public Ui_MainWindow {};
+} // namespace Ui
+
+QT_END_NAMESPACE
+
+#endif // DESIGNERZW4434_H
