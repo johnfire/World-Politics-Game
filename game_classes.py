@@ -14,7 +14,7 @@ class World(object):
         self.tyrants_count = 0
         self.elected_types_count = 0
         self.religous_types_cout = 0
-        self.time_period = 0  # weekly time period. 01 etc from first year
+        self.time = 1  # weekly time period. 01 etc from first year
         self.start_year = 2000
 
 class Person(object):
@@ -25,12 +25,14 @@ class Person(object):
         self.personal_power = 10
         self.charisma = 10
         self.popularity = 10
+        self.daring = 5   # 10 is the most, 1 is the least
+        self.honesty = 5
         self.goals = []
         self.strengths = []
         self.weaknesses = []
-        self.daring = 5   # 10 is the most, 1 is the least
-        self.honesty = 5
         self.abilites = []
+        self.interest_areas = [] # this is where we keep track of areas of interest, that could and cand conflict with others, ie putin wants ukraine, america doesnt want him in the ukraine. data format is "control of ukraine"
+
         #something for compulsions and constraints... 
         
     def sayhi(self):
@@ -90,3 +92,10 @@ class War(Actions):
 
 class Military_Op(Actions):
     pass
+
+class InterestArea(object):
+    def __init__(self, name):
+        self.player = []
+        self.name = "none"
+        self.sort = "none"
+

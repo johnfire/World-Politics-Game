@@ -5,11 +5,11 @@
 import sys
 import pickle
 from game_classes import *
+
 #from python3-pyside.qtcore import *
 #from PySide.QtGui import *
 #from python3-PyQt4.Qt import *
 #this all costs massive amounts of money. no point in buying stuff if you can get it for free... tkinter may be the way to go
-
 
 ## variables, lists, etc
 
@@ -18,7 +18,7 @@ from game_classes import *
 peeps = []
 tyrants = []
 elected_types = []
-religous_types =[]
+religous_types = []
 
 #countries, areas cities etc
 
@@ -40,12 +40,14 @@ companies = []
 
 actions = []
 
+#conflict area list
+
+interestareas =[]
 
 # added as a test for verson control
 #
 #
 #
-
 
 ######################################################################
 #
@@ -53,11 +55,38 @@ actions = []
 #
 ######################################################################
  
- 
-print (" If you want to start a new game type new, if you want to load an old game type game name"), 
-whichgame = input()
 
-if whichgame == "new":  
+######################################################################
+#
+#game functions
+#
+######################################################################
+
+def gameloop ():
+    print ("In the loop")
+    print ("The time is ",world.time)
+    #analyse intereactions
+    for each in range(len(interestareas)):
+        #print("conflict area ", interestareas[each].name, " is in this condition", interestareas[each].status)
+        print("The conflict area", interestareas[each].name, "has the following players")
+        for each in interestareas:
+           print(each.player,"\n")
+        #for y in range(interestareas[x].person):
+        #    print(interestareas[x].person[y], "has the following options /n")
+        
+    #increment time 
+    world.time =world.time + 1
+
+#######################################################################
+#
+#ok start program run. create new or load old  game
+#
+#######################################################################
+
+print ("If you want to start a new game type new, if you want to load an old game type game name "), 
+whichgame = input()
+#whichgame = "new"
+if whichgame in ("new", "New", "NEW","n", "N"):  
     world = World()
     peeps.append(Person("Chris"))
     world.object_count += 1
@@ -80,11 +109,11 @@ else:
 
 ######################################################################
 #
-## the program
+## add new people, conflicts areas etc
 #
 ######################################################################
 
-print ("number of objects is ",  world.object_count)
+print ("The number of objects is ",  world.object_count)
 
 for x in range(0, world.peeps_count):
     peeps[x].sayhi()    
@@ -95,14 +124,16 @@ for x in range(0, world.elected_types_count):
     elected_types[x].sayhowdy()
     elected_types[x].sayhi()
 
+#######################################################################
+#add people
+#######################################################################
 
-print ("would you like to create a new person in the world")
+print ("Would you like to create a new person in the world ")
 answer = input()
-
-while answer == "y":
-    print ("enter the name please",) 
+while answer in ("y", "Y", "yes", "Yes", "YES"):
+    print ("Enter the name please ",) 
     name = input()
-    print ("select type 1 = person 2 = dictator 3 = elected leader")
+    print ("Select type 1 = person 2 = dictator 3 = elected leader ")
     type = input()
     if type == "1":
         peeps.append(Person(name))
@@ -120,21 +151,66 @@ while answer == "y":
         religous_peeps.append(Person(name))
         world.object_count += 1
         world.religous_types_count += 1
-    print ("Would you like to create another?")
+    print ("Would you like to create another? ")
     answer = input()
 
-print ("Halt here for a minute. Type anything to continue")
+###############################################################################
+#add conflict areas
+##############################################################################
+
+print ("Create conflict areas, and add players in each area")
+answer = "y" 
+x = 0
+while answer  in ("y", "Y", "yes", "Yes", "YES"):
+    name = input ("Enter name of conflict area? ")
+    interestareas.append(InterestArea(name))
+    interestareas[x].name = name
+    answer2 = "y"
+    y = 1
+    while answer2  in ("y", "Y", "yes", "Yes", "YES"):
+        name2 = input ("Enter the name of a person who has interests in this area. ")
+        interestareas[x].player.append(name2)
+        answer2 = input ("Would you like to add another person? ")
+    x += 1
+    answer = input ("Would you like to add another conflict area? ")
+
+#######################################################################
+#
+# ok play game
+#
+#
+########################################################################
+
+print ("Halt here for a minute. Type anything to continue. ")
 answer = input()
 print ("\n")
+print ("Would you like to play the game of world domination? ")
+answer =input()
+if answer  in ("y", "Y", "yes", "Yes", "YES"):
+    run_status = 1
+    while run_status == 1:
+        gameloop()
+        if  input ("Would you like to quit")  in ("y", "Y", "yes", "Yes", "YES"):
+            run_status = 0
+        pass
 
-print (" number of objects ", world.object_count)        
-print ("Would you like to save the game, y or n")
+########################################################################
+#
+# save game
+#
+########################################################################
+
+print ("The number of objects is ", world.object_count)        
+print ("Would you like to save the game, y or n ")
 answer = input()
 
-if answer == "n":
-    print ("thanks for playing see you later gator")
-elif answer == "y":
-    dbfile = open('people-pickle', 'wb')               # use binary mode files in 3.X
+if answer in ("no", "n", "No", "NO","N"):
+    print ("Thanks for playing see you later gator. ")
+elif answer  in ("y", "Y", "yes", "Yes", "YES"):
+    print ("What is the name of the file to save? ")
+    answer = input ()
+
+    dbfile = open(answer, 'wb')               # use binary mode files in 3.X
     pickle.dump(world, dbfile)
     for x in range (0, world.peeps_count):
         pickle.dump(peeps[x], dbfile)
@@ -143,8 +219,8 @@ elif answer == "y":
     for x in range(0, world. elected_types_count):
         pickle.dump(elected_types[x], dbfile)
     dbfile.close()
-    print ("we are working on that gator, right now it works... lets see what happens next.")
+    print ("wWe are working on that gator, right now it works... lets see what happens next. ")
 
-print ("ok see you later....")
+print ("Ok see you later.... ")
 
 
