@@ -64,13 +64,13 @@ interestareas =[]
 
 def gameloop ():
     print ("In the loop")
-    print ("The time is ",world.time)
+    print ("The time is ", world.time)
     #analyse intereactions
-    for each in range(len(interestareas)):
+    for x in range(len(interestareas)):
         #print("conflict area ", interestareas[each].name, " is in this condition", interestareas[each].status)
-        print("The conflict area", interestareas[each].name, "has the following players")
-        for each in interestareas:
-           print(each.player,"\n")
+        print("The conflict area", interestareas[x].name, "has the following players")
+        for each in range(len(interestareas[x].player)):
+            print(interestareas[x].player[each])
         #for y in range(interestareas[x].person):
         #    print(interestareas[x].person[y], "has the following options /n")
         
