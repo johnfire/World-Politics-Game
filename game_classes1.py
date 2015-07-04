@@ -15,6 +15,10 @@ class World(object):
         self.conflicts_count = 0
         self.time = 1  # weekly time period. 01 etc from first year
         self.start_year = 2000
+        self.people[] = ""
+        self.country[] = ""
+        self.conflictarea[] = ""
+
 
 ############################################################
 

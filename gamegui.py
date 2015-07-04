@@ -13,10 +13,6 @@ import pickle
 from  game_classes1  import *
 
 ######################################
-
-class Frame(wx.Frame):
-    pass
-
 #######################################
 #
 # psuedo global variables.
@@ -30,19 +26,19 @@ peeps = []
 
 #countries, areas cities etc
 
-countries = []
+#countries = []
 #areas = []
-cities = []
-towns = []
-oceans = []
-seas = []
+#cities = []
+#towns = []
+#oceans = []
+#seas = []
 
 #government, non government organizations etc
 
-governments = []
-ngos = []
-interest_groups = []
-companies = []
+#governments = []
+#ngos = []
+#interest_groups = []
+#companies = []
 
 #actions by human agents in game
 
@@ -63,6 +59,7 @@ peepscount=0
 class MainWindow(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title ="World Domination",  size=(800,600))
+        self.panel =wxPanel(self, -1)
         filemenu = wx.Menu()
         helpmenu = wx.Menu()
         ################################
@@ -87,7 +84,7 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_MENU, self.ExitGame, menuExit)
         self.Bind(wx.EVT_MENU, self.OnAbout,  menuAbout)
         self.Bind(wx.EVT_MENU, self.LoadGame, menuOld)
-        #self.Bind(wx.EVT_MENU, self.displaygame, self.currentgamebutton)
+        #self.Bind(wx.EVT_MENU, self.displaygame, self.currentgamebut)
         self.Bind(wx.EVT_MENU, self.SaveGame, menuSave)
 
         self.SetMenuBar(menuBar)
@@ -95,12 +92,12 @@ class MainWindow(wx.Frame):
         self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
         self.Bind(wx.EVT_PAINT, self.OnPaint)
 
-        self.newgamebutton =wx.Button(self,10, label="Start a new game", pos=(225,50),  size=(350,45),style =1)
-        self.oldgamebutton =wx.Button(self,11, label="Load a prev game", pos=(225,100), size=(350,45),style =1)
-        self.currentgamebutton = wx.Button(self,15,label="show current game",pos=(225,150), size=(350,45),style=1)
-        self.savebutton    =wx.Button(self,12, label="Save current game",pos=(225,200), size=(350,45), style =1)
-        self.settingbutton =wx.Button(self,13, label="Settings",         pos=(225,250), size=(350,45), style =1)
-        self.quitbutton    =wx.Button(self,14, label="End Game",         pos=(225,300), size=(350,45),style=1)
+        self.newgamebutton     =wx.Button(self,10, label="Start a new game", pos=(225,50),  size=(350,45),style =1)
+        self.oldgamebutton     =wx.Button(self,11, label="Load a prev game", pos=(225,100), size=(350,45),style =1)
+        self.currentgamebutton =wx.Button(self,15, label="show current game",pos=(225,150), size=(350,45),style=1)
+        self.savebutton        =wx.Button(self,12, label="Save current game",pos=(225,200), size=(350,45), style =1)
+        self.settingbutton     =wx.Button(self,13, label="Settings",         pos=(225,250), size=(350,45), style =1)
+        self.quitbutton        =wx.Button(self,14, label="End Game",         pos=(225,300), size=(350,45),style=1)
 
         self.Bind(wx.EVT_BUTTON, self.NewGame,  self.newgamebutton)
         self.Bind(wx.EVT_BUTTON, self.LoadGame, self.oldgamebutton)
@@ -115,8 +112,12 @@ class MainWindow(wx.Frame):
         #world.peeps_count += 1
         self.Show(True)
     
+    ##############################################################
+
     def NewGame(self,event):
         newGameWindow = NewGameWindow(None,"im here")
+
+    ##############################################################
 
     def LoadGame(self,event):
         wildcard = "Python source (*.py)|*.py|" \
@@ -223,7 +224,7 @@ class NewGameWindow(wx.Frame):
         self.Show()
 
     def makeperson(self,event):
-        makepeople = MakePerson(self, "AAAA")
+        makepeople = MakePerson(self, "AAA")
 
     def makeland(self, event):
         makecountry =MakeCountry(self, "BBB")
@@ -312,11 +313,6 @@ class MakePerson(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.savedata, savebutton)
         self.Bind(wx.EVT_BUTTON, self.exitscr, exitbutton)
 
-        #tempdata = Person(self.name)
-        #tempdata.name = self.name
-        #tempdata.econcomp = self.econslider.GetValue() 
-        ##tempdata.soccomp = self.socslider.GetValue()
-        #tempdata.clasper = "regular guy"
         self.Show()
     
     def savedata(self,event):
@@ -357,10 +353,11 @@ class MakeCountry(wx.Frame):
         text7 =wx.StaticText(panel, -1, "ag self sufficency", pos=(20,300))
 
         self.name =wx.TextCtrl(panel, -1, " ", pos=(200,20),size=(200,-1))
-
-        self.econslider =wx.Slider(panel,-1,50, 0,100, pos=(200,60),size =(370,-1),style=(wx.SL_AUTOTICKS | wx.SL_LABELS ))
+        self.econslider =wx.Slider(panel,-1,50, 0,100, pos=(200,60),size =(370,-1),
+                                   style=(wx.SL_AUTOTICKS | wx.SL_LABELS ))
         self.econslider.SetTickFreq(1)
-        self.socslider  =wx.Slider(panel,-1,0,-100,100, pos=(200,120),size =(370,-1),style=(wx.SL_AUTOTICKS | wx.SL_LABELS ))
+        self.socslider  =wx.Slider(panel,-1,0,-100,100, pos=(200,120),size =(370,-1),
+                                   style=(wx.SL_AUTOTICKS | wx.SL_LABELS ))
         self.socslider.SetTickFreq(1)
         
         self.name.SetInsertionPoint(0)
@@ -408,18 +405,15 @@ class MakeConflict(wx.Frame):
         panel = wx.Panel(self,-1)
         #panel.SetBackgroundColour('white')
         text1 =wx.StaticText(panel, -1, "Name of area", pos=(20,20))
-        #text2 =wx.StaticText(panel, -1, "Economic level", pos=(20,80))
-        #text3 =wx.StaticText(panel, -1, "Social orientation ", pos=(20,140))
-        #text4 =wx.StaticText(panel, -1, "Population", pos=(20,180))
-        #text5 =wx.StaticText(panel, -1, "GDP", pos=(20,220))
-        #text6 =wx.StaticText(panel, -1, "growth rate", pos=(20,260))
-        #text7 =wx.StaticText(panel, -1, "ag self sufficency", pos=(20,300))
 
         self.name =wx.TextCtrl(panel, -1, " ", pos=(200,20),size=(200,-1))
 
-        self.econslider =wx.Slider(panel,-1,50, 0,100, pos=(200,60),size =(370,-1),style=(wx.SL_AUTOTICKS | wx.SL_LABELS ))
+        self.econslider =wx.Slider(panel,-1,50, 0,100, pos=(200,60),size =(370,-1),
+                                   style=(wx.SL_AUTOTICKS | wx.SL_LABELS ))
         self.econslider.SetTickFreq(1)
-        self.socslider  =wx.Slider(panel,-1,0,-100,100, pos=(200,120),size =(370,-1),style=(wx.SL_AUTOTICKS | wx.SL_LABELS ))
+
+        self.socslider  =wx.Slider(panel,-1,0,-100,100, pos=(200,120),size =(370,-1),
+                                   style=(wx.SL_AUTOTICKS | wx.SL_LABELS ))
         self.socslider.SetTickFreq(1)
         
         self.name.SetInsertionPoint(0)
