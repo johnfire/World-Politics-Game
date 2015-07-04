@@ -11,13 +11,13 @@ class World(object):
         self.name = "the world"
         self.object_count = 0
         self.peeps_count = 0
-        self.countries_count = 0#
+        self.countries_count = 0
         self.conflicts_count = 0
         self.time = 1  # weekly time period. 01 etc from first year
         self.start_year = 2000
-        self.people[] = ""
-        self.country[] = ""
-        self.conflictarea[] = ""
+        self.people = []
+        self.country = []
+        self.conflictarea = []
 
 
 ############################################################
@@ -55,10 +55,9 @@ class Person(object):
         characteristic = characteristic - 10
 
 ###################################################################
-
 class Land(object):
-    pass
-
+    def self__init__(self,name):
+        self.name = name
 ##################################################################
     
 class Country(Land):
@@ -109,7 +108,7 @@ class Military_Op(Actions):
 
 ###################################################################
 
-class InterestArea(object):
+class ConflictArea(object):
     def __init__(self, name):
         self.player = []
         self.name = "none"
