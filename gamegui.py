@@ -400,9 +400,9 @@ class MakeConflict(wx.Frame):
         wx.Frame.__init__(self, None, title ="World Domination: Create a new conflict area",  size=(590,450))
         self.panel = wx.Panel(self,-1)
         self.panel.SetBackgroundColour('pink')
-        text1 =wx.StaticText(panel, -1, "Name of area", pos=(20,20))
+        text1 =wx.StaticText(self.panel, -1, "Name of area", pos=(20,20))
 
-        self.name =wx.TextCtrl(panel, -1, " ", pos=(200,20), size=(200,-1))
+        self.name =wx.TextCtrl(self.panel, -1, " ", pos=(200,20), size=(200,-1))
 
         #self.econslider =wx.Slider(panel,-1,50, 0,100, pos=(200,60),size =(370,-1),
         #                           style=(wx.SL_AUTOTICKS | wx.SL_LABELS ))
@@ -413,8 +413,8 @@ class MakeConflict(wx.Frame):
         #self.socslider.SetTickFreq(1)
         
         #self.name.SetInsertionPoint(0)
-        savebutton =wx.Button(panel, -1, "Save data",              pos=(100,340))
-        exitbutton =wx.Button(panel, -1, "Exit conflict creation", pos=(350,340))
+        savebutton =wx.Button(self.panel, -1, "Save data",              pos=(100,340))
+        exitbutton =wx.Button(self.panel, -1, "Exit conflict creation", pos=(350,340))
         self.Bind(wx.EVT_BUTTON, self.savedata, savebutton)
         self.Bind(wx.EVT_BUTTON, self.exitscr, exitbutton)
         self.Show()
@@ -422,7 +422,7 @@ class MakeConflict(wx.Frame):
     #################################################
 
     def savedata(self,event):
-        tempdata = Countries(self.name)
+        tempdata = Country(self.name)
         tempdata.name = self.name.GetValue()
         #tempdata.econcomp = self.econslider.GetValue() 
         #tempdata.soccomp = self.socslider.GetValue()
