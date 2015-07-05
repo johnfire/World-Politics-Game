@@ -1,9 +1,0 @@
-('/home/christopher-rehm/programingstuff/pythontest/game_project/build/gamegui/gamegui',
- True,
- False,
- None,
- None,
- [],
- None,
- False,
- 1435677641)

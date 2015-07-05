@@ -2,7 +2,7 @@
 
 #######################################
 #
-# game gui file
+# game gui file: driver for the display windows and app loop
 #
 #######################################
 
@@ -24,9 +24,11 @@ debug = 1
 #######################################
 
 class MainWindow(wx.Frame):
-    def __init__(self):
+    def __init__(self, datablock):
         wx.Frame.__init__(self, None, title ="World Domination",  size=(800,600))
         self.panel =wx.Panel(self, -1)
+        self.datablk = datablock
+        print(self.datablk)
         filemenu = wx.Menu()
         helpmenu = wx.Menu()
         ################################
@@ -67,7 +69,7 @@ class MainWindow(wx.Frame):
         self.quitbutton        =wx.Button(self,14, label="End Game",         pos=(225,300), size=(350,45),style=1)
 
         self.Bind(wx.EVT_BUTTON, self.NewGame,  self.newgamebutton)
-        self.Bind(wx.EVT_BUTTON, self.LoadGame, self.oldgamebutton)
+        self.Bind(wx.EVT_BUTTON, self.LoadGame( self.datablk), self.oldgamebutton)
         self.Bind(wx.EVT_BUTTON, self.displaygame, self.currentgamebutton)
         self.Bind(wx.EVT_BUTTON, self.SaveGame, self.savebutton)
         self.Bind(wx.EVT_BUTTON, self.Settings, self.settingbutton)
@@ -84,7 +86,8 @@ class MainWindow(wx.Frame):
 
     ##############################################################
 
-    def LoadGame(self,event):
+    def LoadGame(self,datablocke):
+        global world
         wildcard = "Python source (*.py)|*.py|" \
         "Compiled Python (*.pyc)|*.pyc|" \
         "All files (*.*)|*.*"
@@ -95,7 +98,12 @@ class MainWindow(wx.Frame):
             # Open the file, read the contents and set them into
             # the text edit window
             filehandle=open(os.path.join(self.dirname, self.filename),'rb')
-            world = pickle.load(filehandle)
+            datablocke = pickle.load(filehandle)
+     
+            if debug == 1:
+                print(datablocke)
+                print(world.peeps_count)
+                print(world.people)
             filehandle.close()
             # Report on name of latest file read
             #self.SetTitle("Editing ... "+self.filename)
@@ -106,7 +114,8 @@ class MainWindow(wx.Frame):
     ##############################################
 
     def displaygame (self,event):
-        gamewindow = gameWindow(None,"blahblah")
+        print(self.datablk)
+        gamewindow = gameWindow(self.datablk)
         
     #################################################         
 
@@ -127,7 +136,7 @@ class MainWindow(wx.Frame):
     ###########################################
     
     def Settings(self,event):
-        settingsWindow = SettingsWindow(None,"blahblah")
+        settingsWindow = SettingsWindow()
    
     ###########################################
 
@@ -180,7 +189,6 @@ class NewGameWindow(wx.Frame):
 
     ##########################################
 
-
     def makeperson(self,event):
         makepeople = MakePerson()
 
@@ -198,47 +206,53 @@ class NewGameWindow(wx.Frame):
 
     def makenext(self,event):
         pass
+
     ########################################
 
     def ExitScreen(self,event):
         self.Close(True)
 
-
 ################################################################
 ################################################################
-
 
 class SettingsWindow(wx.Frame):
     def __init__(self):
         wx.Frame.__init__(self, None, title ="World Domination: Settings",  size=(600,400))
+        pass
         self.Show()
 
 ##################################################################
 class gameWindow(wx.Frame):
 
-    def __init__(self):
+    def __init__(self, location):
         wx.Frame.__init__(self, None, title ="World Domination: Game Status",  size=(600,500))
         self.panel =wx.Panel(self,-1)
-
         self.tree = wx.TreeCtrl(self.panel,pos=(20,20),size=(150,299))
         theworld  = self.tree.AddRoot("People")
-        #print(peepscount)#
-        for x in range(0,len(peeps)):
-            #print(x)
-            #print(peeps)
-            self.tree.AppendItem(theworld, peeps[x].name)
+        if debug == 1:
+            print(location)
+            for x in range(0,len(location.people)):
+                print(x)
+                print(location.people[x])
+        for y in range(0, len(location.people)):
+            self.tree.AppendItem(theworld, location.people[y].name)
 
-        self.treecntry = wx.TreeCtrl(self.panel,pos=(180,20),size=(150,299))
-        the_countries  = self.treecntry.AddRoot("Countries")
-        for x in range(0, len(countries)):
-           self.treecntry.AppendItem(the_countries, countries[x].name)
+        #self.treecntry = wx.TreeCtrl(self.panel,pos=(180,20),size=(150,299))
+        #the_countries  = self.treecntry.AddRoot("Countries")
+        
+        #if len(world.countries) >= 0:
+        #    for x in range(0, len(world.countries)):
+        #        self.treecntry.AppendItem(the_countries, world.countries[x].name)
 
-        self.treeconflict = wx.TreeCtrl(self.panel,pos=(340,20),size=(150,299))
-        theconflicts  = self.treeconflict.AddRoot("conflicts")
-        for x in range(0, len(conflicts)):
-            self.treeconflict.AppendItem(theconflicts, conflicts[x].name)
+        #self.treeconflict = wx.TreeCtrl(self.panel,pos=(340,20),size=(150,299))
+        #theconflicts  = self.treeconflict.AddRoot("conflicts")
+        
+        #if len(worldconflictareas) >= 0
+        #    for x in range(0, len(world.conflictareas)):
+        #        self.treeconflict.AppendItem(theconflicts, world.conflictareas[x].name)
         
         closebutton =wx.Button(self.panel,-1,"close",pos=(25,320),size=(250,50))
+
         self.Bind(wx.EVT_BUTTON, self.closewindow, closebutton)
 
         self.Show()
@@ -299,6 +313,7 @@ class MakePerson(wx.Frame):
             print(tempdata.soccomp)
 
         world.people.append(tempdata)
+        
         world.object_count += 1
         world.peeps_count += 1
 
@@ -447,7 +462,7 @@ world = World()
 if debug == 1:
     print(world)
 
-frame = MainWindow()
+frame = MainWindow(world)
 app.MainLoop()
 
 
