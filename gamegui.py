@@ -69,7 +69,7 @@ class MainWindow(wx.Frame):
         self.quitbutton        =wx.Button(self,14, label="End Game",         pos=(225,300), size=(350,45),style=1)
 
         self.Bind(wx.EVT_BUTTON, self.NewGame,  self.newgamebutton)
-        self.Bind(wx.EVT_BUTTON, self.LoadGame( self.datablk), self.oldgamebutton)
+        self.Bind(wx.EVT_BUTTON, self.LoadGame, self.oldgamebutton)
         self.Bind(wx.EVT_BUTTON, self.displaygame, self.currentgamebutton)
         self.Bind(wx.EVT_BUTTON, self.SaveGame, self.savebutton)
         self.Bind(wx.EVT_BUTTON, self.Settings, self.settingbutton)
@@ -146,13 +146,13 @@ class MainWindow(wx.Frame):
 
     ##########################################        
     def OnPaint(self,event1):
-        pic1 =wx.Bitmap("putin.jpg")
+        pic1 =wx.Bitmap("./fotos/putin.jpg")
         dc = wx.PaintDC(self)
         dc.Clear()
         dc.DrawBitmap(pic1,0,0,True)
-        pic2 =wx.Bitmap("war.jpg")
+        pic2 =wx.Bitmap("./fotos/war.jpg")
         dc.DrawBitmap(pic2,400,0,True)
-        pic3 =wx.Bitmap("angela.jpg")
+        pic3 =wx.Bitmap("./fotos/angela.jpg")
         dc.DrawBitmap(pic3, 400, 380,True)
         
     ########################################    
