@@ -6,6 +6,8 @@
 #
 #######################################
 
+""" the basic idea is to create a game or simulator that takes real world events and predicts future outcomes based on the data. """
+
 import wx
 import os
 import os.path
@@ -14,8 +16,8 @@ from  game_classes1  import World, Person, Land, Country, ConflictArea
 
 ######################################
 
-debug = 1
-#debug = 0
+#debug = 1
+debug = 0
 
 #######################################
 #
@@ -49,7 +51,6 @@ class MainWindow(wx.Frame):
         menuBar.SetBackgroundColour('White')
         ###################################
 
-
         self.Bind(wx.EVT_MENU, self.ExitGame, menuExit)
         self.Bind(wx.EVT_MENU, self.OnAbout,  menuAbout)
         self.Bind(wx.EVT_MENU, self.LoadGame, menuOld)
@@ -61,7 +62,8 @@ class MainWindow(wx.Frame):
         self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
         self.Bind(wx.EVT_PAINT, self.OnPaint)
 
-        self.newgamebutton     =wx.Button(self,10, label="Start a new game", pos=(225,50),  size=(350,45),style =1)
+        self.newgamebutton     =wx.Button(self,10, label="Start/add data to a new game", pos=(225,50),  size=(350,45),
+                                          style =1)
         self.oldgamebutton     =wx.Button(self,11, label="Load a prev game", pos=(225,100), size=(350,45),style =1)
         self.currentgamebutton =wx.Button(self,15, label="show current game",pos=(225,150), size=(350,45),style=1)
         self.savebutton        =wx.Button(self,12, label="Save current game",pos=(225,200), size=(350,45), style =1)
@@ -273,14 +275,33 @@ class gameWindow(wx.Frame):
 
 class MakePerson(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title ="World Domination: Create a new Country",  size=(590,390))
+        wx.Frame.__init__(self, None, title ="World Domination: Create a new Country",  size=(800,700))
         self.panel = wx.Panel(self,-1)
         self.panel.SetBackgroundColour('white')
-        text1 =wx.StaticText(self.panel, -1, "Name of Person", pos=(20,20))
-        text2 =wx.StaticText(self.panel, -1, "Economic Compass", pos=(20,80))
-        text3 =wx.StaticText(self.panel, -1, "Social Compass  ", pos=(20,140))
+        text1 =wx.StaticText(self.panel, -1, "Name of Person",                pos=(20,20))
+        text2 =wx.StaticText(self.panel, -1, "Economic Compass",              pos=(20,80))
+        text3 =wx.StaticText(self.panel, -1, "Social Compass  ",              pos=(20,140))
+        text4 =wx.StaticText(self.panel, -1, "General influence -100 to 100", pos=(20,200))
+        text5 =wx.StaticText(self.panel, -1, "Money (thousands of euros)",    pos=(20,240))
+        text6 =wx.StaticText(self.panel, -1, "Personal Power -100 to 100",    pos=(20,280))
+        text7 =wx.StaticText(self.panel, -1, "Charisma -10 to 10",            pos=(20,320))
+        text8 =wx.StaticText(self.panel, -1, "Popularity -100 to 100",        pos=(20,360))
+        text9 =wx.StaticText(self.panel, -1, "Daring -10 to 10",              pos=(20,400))
+        text10=wx.StaticText(self.panel, -1, "Honesty-10 to 10",              pos=(20,440))
+        text11=wx.StaticText(self.panel, -1, "Goals",                         pos=(20,480))
+        text12=wx.StaticText(self.panel, -1, "Strengths",                     pos=(20,520))
+        text13=wx.StaticText(self.panel, -1, "Weaknesses",            pos=(470,200))
+        text14=wx.StaticText(self.panel, -1, "Wants",                 pos=(470,240))
+        text15=wx.StaticText(self.panel, -1, "open",                  pos=(470,280))
+        text16=wx.StaticText(self.panel, -1, "open",                  pos=(470,320))
+        text17=wx.StaticText(self.panel, -1, "open", pos=(470,360))
+        text18=wx.StaticText(self.panel, -1, "open", pos=(470,400))
+        text19=wx.StaticText(self.panel, -1, "open", pos=(470,440))
+        text20=wx.StaticText(self.panel, -1, "open", pos=(470,480))
+  
+        ### entry boxes etc....
 
-        self.name =wx.TextCtrl(self.panel, -1, " ", pos=(200,20),size=(200,-1))
+        self.name       =wx.TextCtrl(self.panel, -1, " ", pos=(200,20),size=(200,-1))
 
         self.econslider =wx.Slider(self.panel, -1, 0, -100,100, pos=(200,60), size =(370,-1),
                                    style=(wx.SL_AUTOTICKS | wx.SL_LABELS ))
@@ -289,10 +310,23 @@ class MakePerson(wx.Frame):
                                    style=(wx.SL_AUTOTICKS | wx.SL_LABELS ))
         self.socslider.SetTickFreq(1)
         
+        self.influence      =wx.TextCtrl(self.panel, -1, " ", pos=(300,200),size=(100,-1))
+        self.money          =wx.TextCtrl(self.panel, -1, " ", pos=(300,240),size=(100,-1))
+        self.power          =wx.TextCtrl(self.panel, -1, " ", pos=(300,280),size=(100,-1))
+        self.charisma       =wx.TextCtrl(self.panel, -1, " ", pos=(300,320),size=(100,-1))
+        self.popularity     =wx.TextCtrl(self.panel, -1, " ", pos=(300,360),size=(100,-1))
+        self.daring         =wx.TextCtrl(self.panel, -1, " ", pos=(300,400),size=(100,-1)) 
+        self.honesty        =wx.TextCtrl(self.panel, -1, " ", pos=(300,440),size=(100,-1))
+
+
+
+
+
+
         self.name.SetInsertionPoint(0)
 
-        savebutton =wx.Button(self.panel,-1,"Save data",pos=(100,300))
-        exitbutton =wx.Button(self.panel,-1,"Exit people creation",pos=(350,300))
+        savebutton =wx.Button(self.panel,-1,"Save data",pos=(100,610))
+        exitbutton =wx.Button(self.panel,-1,"Exit people creation",pos=(350,610))
         self.Bind(wx.EVT_BUTTON, self.savedata, savebutton)
         self.Bind(wx.EVT_BUTTON, self.exitscr, exitbutton)
 
@@ -301,8 +335,8 @@ class MakePerson(wx.Frame):
     ############################################
     
     def savedata(self,event):
-        tempdata = Person(self.name)
-        tempdata.name = self.name.GetValue()
+        tempdata = Person(self.name.GetValue())
+        #tempdata.name = self.name.GetValue()
         tempdata.econcomp = self.econslider.GetValue() 
         tempdata.soccomp = self.socslider.GetValue()
         tempdata.clasper = "regular guy"
@@ -332,16 +366,29 @@ class MakePerson(wx.Frame):
 
 class MakeCountry(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title ="World Domination: Create a new Country",  size=(590,450))
+        wx.Frame.__init__(self, None, title ="World Domination: Create a new Country",  size=(800,700))
         self.panel = wx.Panel(self,-1)
         self.panel.SetBackgroundColour('blue')
-        text1 =wx.StaticText(self.panel, -1, "Name of Country", pos=(20,20))
-        text2 =wx.StaticText(self.panel, -1, "Economic level", pos=(20,80))
-        text3 =wx.StaticText(self.panel, -1, "Social orientation ", pos=(20,140))
-        text4 =wx.StaticText(self.panel, -1, "Population", pos=(20,180))
-        text5 =wx.StaticText(self.panel, -1, "GDP", pos=(20,220))
-        text6 =wx.StaticText(self.panel, -1, "growth rate", pos=(20,260))
-        text7 =wx.StaticText(self.panel, -1, "ag self sufficency", pos=(20,300))
+        text1 =wx.StaticText(self.panel, -1, "Name of Country",             pos=(20,20))
+        text2 =wx.StaticText(self.panel, -1, "Economic level",              pos=(20,80))
+        text3 =wx.StaticText(self.panel, -1, "Social orientation ",         pos=(20,140))
+        text4 =wx.StaticText(self.panel, -1, "Population",                  pos=(20,180))
+        text5 =wx.StaticText(self.panel, -1, "GDP",                         pos=(20,220))
+        text6 =wx.StaticText(self.panel, -1, "growth rate",                 pos=(20,260))
+        text7 =wx.StaticText(self.panel, -1, "ag self sufficency",          pos=(20,300))
+        text8 =wx.StaticText(self.panel, -1, "average age",                 pos=(20,360))
+        text9 =wx.StaticText(self.panel, -1, "young med or old",            pos=(20,400))
+        text10=wx.StaticText(self.panel, -1, "oil need or surplus",         pos=(20,440))
+        text11=wx.StaticText(self.panel, -1, "food  need or surplus",       pos=(20,480))
+        text12=wx.StaticText(self.panel, -1, "Raw goods  need or surplus",  pos=(20,520))
+        text13=wx.StaticText(self.panel, -1, "finished goods  need or surplus",   pos=(470,200))
+        text14=wx.StaticText(self.panel, -1, "Military Size",               pos=(470,240))
+        text15=wx.StaticText(self.panel, -1, "military ability 1 to 10",    pos=(470,280))
+        text16=wx.StaticText(self.panel, -1, "GDP",                         pos=(470,320))
+        text17=wx.StaticText(self.panel, -1, "type of govt",                pos=(470,360))
+        text18=wx.StaticText(self.panel, -1, "stability",                   pos=(470,400))
+        text19=wx.StaticText(self.panel, -1, "debt",                        pos=(470,440))
+        text20=wx.StaticText(self.panel, -1, "military production",         pos=(470,480))
 
         self.name =wx.TextCtrl(self.panel, -1, " ", pos=(200,20),size=(200,-1))
         self.econslider =wx.Slider(self.panel, -1, 50, 0, 100, pos=(200,60), size =(370,-1),
@@ -351,9 +398,11 @@ class MakeCountry(wx.Frame):
                                    style=(wx.SL_AUTOTICKS | wx.SL_LABELS ))
         self.socslider.SetTickFreq(1)
         
+
+
         self.name.SetInsertionPoint(0)
-        savebutton =wx.Button(self.panel, -1, "save data",             pos=(100,340))
-        exitbutton =wx.Button(self.panel, -1, "Exit country creation", pos=(350,340))
+        savebutton =wx.Button(self.panel, -1, "save data",             pos=(100,600))
+        exitbutton =wx.Button(self.panel, -1, "Exit country creation", pos=(350,600))
         self.Bind(wx.EVT_BUTTON, self.savedata, savebutton)
         self.Bind(wx.EVT_BUTTON, self.exitscr, exitbutton)
         self.Show()
@@ -401,6 +450,27 @@ class MakeConflict(wx.Frame):
         self.panel = wx.Panel(self,-1)
         self.panel.SetBackgroundColour('pink')
         text1 =wx.StaticText(self.panel, -1, "Name of area", pos=(20,20))
+        text2 =wx.StaticText(self.panel, -1, "Players",              pos=(20,80))
+        text3 =wx.StaticText(self.panel, -1, "Belongs to",         pos=(20,140))
+        text4 =wx.StaticText(self.panel, -1, "Problems",                  pos=(20,180))
+        text5 =wx.StaticText(self.panel, -1, "Opportunities",                         pos=(20,220))
+        text6 =wx.StaticText(self.panel, -1, "activity level",                 pos=(20,260))
+        text7 =wx.StaticText(self.panel, -1, "a",          pos=(20,300))
+        text8 =wx.StaticText(self.panel, -1, "a",                 pos=(20,360))
+        text9 =wx.StaticText(self.panel, -1, "y",            pos=(20,400))
+        text10=wx.StaticText(self.panel, -1, "o",         pos=(20,440))
+        text11=wx.StaticText(self.panel, -1, "f",       pos=(20,480))
+        text12=wx.StaticText(self.panel, -1, "R",  pos=(20,520))
+        text13=wx.StaticText(self.panel, -1, "f",   pos=(470,200))
+        text14=wx.StaticText(self.panel, -1, "m",               pos=(470,240))
+        text15=wx.StaticText(self.panel, -1, "m",    pos=(470,280))
+        text16=wx.StaticText(self.panel, -1, "G",                         pos=(470,320))
+        text17=wx.StaticText(self.panel, -1, "j",                pos=(470,360))
+        text18=wx.StaticText(self.panel, -1, "s",                   pos=(470,400))
+        text19=wx.StaticText(self.panel, -1, "d",                        pos=(470,440))
+        text20=wx.StaticText(self.panel, -1, "m",         pos=(470,480))
+
+
         self.name =wx.TextCtrl(self.panel, -1, " ", pos=(200,20), size=(200,-1))
         savebutton =wx.Button(self.panel, -1, "Save data",              pos=(100,340))
         exitbutton =wx.Button(self.panel, -1, "Exit conflict creation", pos=(350,340))
