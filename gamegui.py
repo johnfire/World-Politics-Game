@@ -86,7 +86,7 @@ class MainWindow(wx.Frame):
 
     ##############################################################
 
-    def LoadGame(self,datablocke):
+    def LoadGame(self,event):
         global world
         wildcard = "Python source (*.py)|*.py|" \
         "Compiled Python (*.pyc)|*.pyc|" \
@@ -99,9 +99,11 @@ class MainWindow(wx.Frame):
             # the text edit window
             filehandle=open(os.path.join(self.dirname, self.filename),'rb')
             datablocke = pickle.load(filehandle)
-     
+            world = datablocke
             if debug == 1:
+                print("in loop in load game.. ")
                 print(datablocke)
+                print(world)
                 print(world.peeps_count)
                 print(world.people)
             filehandle.close()
@@ -114,8 +116,8 @@ class MainWindow(wx.Frame):
     ##############################################
 
     def displaygame (self,event):
-        print(self.datablk)
-        gamewindow = gameWindow(self.datablk)
+        #print(self.datablk)
+        gamewindow = gameWindow()
         
     #################################################         
 
@@ -176,7 +178,7 @@ class NewGameWindow(wx.Frame):
         self.createPerson       =wx.Button(self,20,label="Create a person",       pos=(225,50 ),size=(350,45),style=1)
         self.createLand         =wx.Button(self,21,label="Create a place",        pos=(225,100),size=(350,45),style=1)
         self.createConflictArea =wx.Button(self,22,label="Create a conflict area",pos=(225,150),size=(350,45),style=1)
-        self.createNext         =wx.Button(self,22,label="Create blank",          pos=(225,200),size=(350,45),style=1)
+        self.createNext         =wx.Button(self,24,label="Create blank",          pos=(225,200),size=(350,45),style=1)
         self.quitbutton         =wx.Button(self,23,label="Finished creating",     pos=(225,250),size=(350,45),style=1)
 
         self.Bind(wx.EVT_BUTTON, self.makeperson,       self.createPerson)
@@ -200,7 +202,7 @@ class NewGameWindow(wx.Frame):
     #########################################
 
     def makeconflictarea(self,event):
-        makeconflict =MakeConflict()
+        makeconflict = MakeConflict()
     
     ########################################
 
@@ -224,32 +226,31 @@ class SettingsWindow(wx.Frame):
 ##################################################################
 class gameWindow(wx.Frame):
 
-    def __init__(self, location):
+    def __init__(self):
         wx.Frame.__init__(self, None, title ="World Domination: Game Status",  size=(600,500))
         self.panel =wx.Panel(self,-1)
         self.tree = wx.TreeCtrl(self.panel,pos=(20,20),size=(150,299))
         theworld  = self.tree.AddRoot("People")
         if debug == 1:
-            print(location)
-            for x in range(0,len(location.people)):
+            for x in range(0,len(world.people)):
                 print(x)
-                print(location.people[x])
-        for y in range(0, len(location.people)):
-            self.tree.AppendItem(theworld, location.people[y].name)
+                print(world.people[x])
+        for y in range(0, len(world.people)):
+            self.tree.AppendItem(theworld, world.people[y].name)
 
-        #self.treecntry = wx.TreeCtrl(self.panel,pos=(180,20),size=(150,299))
-        #the_countries  = self.treecntry.AddRoot("Countries")
+        self.treecntry = wx.TreeCtrl(self.panel,pos=(180,20),size=(150,299))
+        the_countries  = self.treecntry.AddRoot("Countries")
         
-        #if len(world.countries) >= 0:
-        #    for x in range(0, len(world.countries)):
-        #        self.treecntry.AppendItem(the_countries, world.countries[x].name)
+        if len(world.countries) > 0:
+            for x in range(0, len(world.countries)):
+                self.treecntry.AppendItem(the_countries, world.countries[x].name)
 
-        #self.treeconflict = wx.TreeCtrl(self.panel,pos=(340,20),size=(150,299))
-        #theconflicts  = self.treeconflict.AddRoot("conflicts")
+        self.treeconflict = wx.TreeCtrl(self.panel,pos=(340,20),size=(150,299))
+        theconflicts  = self.treeconflict.AddRoot("Conflicts")
         
-        #if len(worldconflictareas) >= 0
-        #    for x in range(0, len(world.conflictareas)):
-        #        self.treeconflict.AppendItem(theconflicts, world.conflictareas[x].name)
+        if len(world.conflictarea) > 0:
+            for x in range(0, len(world.conflictarea)):
+                self.treeconflict.AppendItem(theconflicts, world.conflictarea[x].name)
         
         closebutton =wx.Button(self.panel,-1,"close",pos=(25,320),size=(250,50))
 
@@ -330,7 +331,7 @@ class MakePerson(wx.Frame):
 #################################################################
 
 class MakeCountry(wx.Frame):
-    def __init__(self, parent, title):
+    def __init__(self):
         wx.Frame.__init__(self, None, title ="World Domination: Create a new Country",  size=(590,450))
         self.panel = wx.Panel(self,-1)
         self.panel.SetBackgroundColour('blue')
@@ -364,11 +365,12 @@ class MakeCountry(wx.Frame):
         tempdata.name = self.name.GetValue()
         tempdata.econcomp = self.econslider.GetValue() 
         tempdata.soccomp = self.socslider.GetValue()
-        #tempdata.clasper = "regular guy"
-        #print(tempdata)
-        print(tempdata.name)
-        print(tempdata.econcomp)
-        print(tempdata.soccomp)
+        
+        if debug == 1:
+            print(tempdata)
+            print(tempdata.name)
+            print(tempdata.econcomp)
+            print(tempdata.soccomp)
         world.countries.append(tempdata)
         world.object_count += 1
         world.countries_count += 1
@@ -378,9 +380,6 @@ class MakeCountry(wx.Frame):
             print(countryname)
             econlevel =self.econslider.GetValue()
             print(econlevel)
-        soc =self.socslider.GetValue()
-        if debug == 1:
-            print(soc)
 
     ###########################################
 
@@ -397,22 +396,12 @@ class MakeCountry(wx.Frame):
 
 class MakeConflict(wx.Frame):
     def __init__(self):
+        print("i am in the conflict init routine")
         wx.Frame.__init__(self, None, title ="World Domination: Create a new conflict area",  size=(590,450))
         self.panel = wx.Panel(self,-1)
         self.panel.SetBackgroundColour('pink')
         text1 =wx.StaticText(self.panel, -1, "Name of area", pos=(20,20))
-
         self.name =wx.TextCtrl(self.panel, -1, " ", pos=(200,20), size=(200,-1))
-
-        #self.econslider =wx.Slider(panel,-1,50, 0,100, pos=(200,60),size =(370,-1),
-        #                           style=(wx.SL_AUTOTICKS | wx.SL_LABELS ))
-        #self.econslider.SetTickFreq(1)
-        #
-        #self.socslider  =wx.Slider(panel,-1,0,-100,100, pos=(200,120),size =(370,-1),
-        #                           style=(wx.SL_AUTOTICKS | wx.SL_LABELS ))
-        #self.socslider.SetTickFreq(1)
-        
-        #self.name.SetInsertionPoint(0)
         savebutton =wx.Button(self.panel, -1, "Save data",              pos=(100,340))
         exitbutton =wx.Button(self.panel, -1, "Exit conflict creation", pos=(350,340))
         self.Bind(wx.EVT_BUTTON, self.savedata, savebutton)
@@ -422,27 +411,19 @@ class MakeConflict(wx.Frame):
     #################################################
 
     def savedata(self,event):
-        tempdata = Country(self.name)
+        tempdata = Country()
         tempdata.name = self.name.GetValue()
-        #tempdata.econcomp = self.econslider.GetValue() 
-        #tempdata.soccomp = self.socslider.GetValue()
-        #tempdata.clasper = "regular guy"
         if debug == 1:
             print(tempdata)
             print(tempdata.name)
-            #print(tempdata.econcomp)
-            #print(tempdata.soccomp)
-        world.conflictareas.append(tempdata)
+        world.conflictarea.append(tempdata)
         world.object_count += 1
         world.conflicts_count += 1
         
         if debug == 1:
             countryname =self.name.GetValue()
             print(countryname)
-            econlevel =self.econslider.GetValue()
-            print(econlevel)
-            soc =self.socslider.GetValue()
-            print(soc)
+
 
     ##########################
 

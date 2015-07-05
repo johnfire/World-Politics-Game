@@ -8,7 +8,7 @@
 
 class World(object):
     def __init__(self):
-        self.name = "the world"
+        self.name = "The World"
         self.object_count = 0
         self.peeps_count = 0
         self.countries_count = 0
@@ -16,7 +16,7 @@ class World(object):
         self.time = 1  # weekly time period. 01 etc from first year
         self.start_year = 2000
         self.people = []
-        self.country = []
+        self.countries = []
         self.conflictarea = []
 
 
