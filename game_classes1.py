@@ -92,6 +92,92 @@ class Person(object):
 class SpecialAbility():
     def OnInit():
         pass
+    
+    ########################################
+    def controlGovt(self,event):
+        Pass
+    
+    ########################################
+    def negotiate(self,event):
+        Pass
+    
+    ########################################
+    def startWar(self,event):
+        Pass
+    
+    ########################################
+    def spendBusinessMoney(self,event):
+        Pass
+    
+    ########################################
+    def spendChurchMoney(self,event):
+        Pass
+    
+    ########################################
+    def usePoliticalPressure(self,event):
+        Pass
+    
+    ########################################
+    def orderBoycott(self,event):
+        Pass
+    
+    ########################################
+    def endBoycott(self,event):
+        Pass
+    
+    ########################################
+    def milOperation(self,event):
+        Pass
+    
+    ########################################
+    #def (self,event):
+        Pass
+    
+    ########################################
+    #def (self,event):
+        Pass
+    
+    ########################################
+    #def (self,event):
+        Pass
+    
+    ########################################
+    #def (self,event):
+        Pass
+    
+    ########################################
+    #def (self,event):
+        Pass
+    
+    ########################################
+    #def (self,event):
+        Pass
+    
+    ########################################
+    #def (self,event):
+        Pass
+    
+    ########################################
+    #def (self,event):
+        Pass
+    
+    ########################################
+    #def (self,event):
+        Pass
+    
+    ########################################
+    #def (self,event):
+        Pass
+    
+    ########################################
+    #def (self,event):
+        Pass
+    
+    ########################################
+    #def (self,event):
+        Pass
+
+
 
 ##################################################################
 #
@@ -127,7 +213,7 @@ class Country(Land):
         #self.       =  0
    
     #######################
-    def holdElections():
+    def holdElections(self,event):
         pass
  
     #######################
