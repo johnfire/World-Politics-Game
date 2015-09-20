@@ -1,6 +1,6 @@
 # game
 test game
-this is an experiemnt to learn about python. its going to be some kind of simulation  of world politics, i havent figured out if its a game or a simulater yet.
+this is an experiment to learn about python. its going to be some kind of simulation  of world politics, i havent figured out if its a game or a simulater yet.
 working on it
 
 the main program is the file gamegui.py - you also need the game_classes1.py file and the fotos in the fotos folder. the files labeled blahblah.data are data files for testing.
